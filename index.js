@@ -1,7 +1,12 @@
 const express = require('express');
+const { request } = require('http');
 const { json } = require('stream/consumers');
 
 const app = express();
+
+
+app.use(express.json());
+app.use(express.urlencoded());
 
 //endpoint
 app.get('/', (req, res)=>{
@@ -40,6 +45,38 @@ app.post('/cars/names', (req, res)=>{
     res.json(allCars);
 });
 */
+
+const groceryList = [
+    {
+        item: 'mangoes',
+        quantity: '3'
+    },
+    {
+        item: 'oranges',
+        quantity: '5'
+    },
+    {
+        item: 'pineapples',
+        quantity: '2'
+    },
+    {
+        item: 'banana',
+        quantity: '1'
+    },
+];
+
+//groceries
+app.get('/groceries', (req, res)=>{
+
+    res.json(groceryList)
+});
+
+//post groceries
+app.post('/groceries', (req, res)=>{
+    console.log(req.body);
+    groceryList.push(req.body);
+    res.send(201);
+});
 
 //All cars with their description
 app.get('/cars', (req, res)=>{
